@@ -512,27 +512,18 @@ body {
         width: 100vw;
         height: 100dvh;
         box-shadow: none;
-
-        display: flex;
-        flex-direction: column;
     }
 
     .painting-area {
         width: 100vw;
-        height: auto;
-
-        aspect-ratio: 2 / 3;
-
+        height: calc(100vw * 1.5);
         flex-shrink: 0;
     }
 
     .dialogue-box {
         width: 100%;
-        height: auto;
-
-        flex: 1;
+        height: calc(100dvh - (100vw * 1.5));
         min-height: 0;
-
         box-sizing: border-box;
     }
 
