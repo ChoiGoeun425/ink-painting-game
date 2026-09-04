@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>■■■■타운</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+
+    <main class="mobile-screen">
+
+        <!-- ========================================
+             그림 영역
+        ========================================= -->
+
+        <section
+            class="painting-area"
+            id="paintingArea"
+        >
+
+            <img
+                src="images/ink-painting.png"
+                alt="먹으로 그린 산속 풍경"
+                class="painting"
+            >
+
+
+            <!-- 산 -->
+
+            <button
+                class="object mountain"
+                data-name="산"
+                data-text="첩첩이 이어진 산이다. 짙은 먹빛이 산 전체를 덮고 있어 산 너머에 무엇이 있는지는 알 수 없다."
+            ></button>
+
+
+            <!-- 초가집 -->
+
+            <button
+                class="object house"
+                data-name="초가집"
+                data-text="산 아래에 작은 초가집이 자리하고 있다. 오래된 집처럼 보이지만, 아직 사람이 머무는 곳인지 알 수 없다."
+            ></button>
+
+
+            <!-- 대나무 -->
+
+            <button
+                class="object bamboo"
+                data-name="대나무"
+                data-text="초가집 옆으로 대나무가 자라고 있다. 가느다란 잎들이 바람에 흔들리고 있다."
+            ></button>
+
+
+            <!-- 곶감 -->
+
+            <button
+                class="object persimmon"
+                data-name="곶감"
+                data-text="바닥에 곶감 하나가 떨어져 있다. 누군가 일부러 이곳에 놓아둔 것처럼 보인다."
+            ></button>
+
+        </section>
+
+
+        <!-- ========================================
+             대화창
+        ========================================= -->
+
+        <section
+            class="dialogue-box"
+            id="dialogueBox"
+        >
+
+            <div
+                class="dialogue-name"
+                id="dialogue-name"
+            ></div>
+
+            <div
+                class="dialogue-text"
+                id="dialogue-text"
+            ></div>
+
+        </section>
+
+
+        <!-- ========================================
+             비밀번호 팝업
+        ========================================= -->
+
+        <div
+            class="password-overlay"
+            id="passwordOverlay"
+        >
+
+            <div class="password-popup">
+
+                <div class="password-title">
+                    이 그림의 모티브는?
+                </div>
+
+
+                <input
+                    type="text"
+                    id="passwordInput"
+                    autocomplete="off"
+                    placeholder="답을 입력하세요"
+                >
+
+
+                <button
+                    type="button"
+                    id="passwordButton"
+                >
+                    확인
+                </button>
+
+
+                <div
+                    class="password-error"
+                    id="passwordError"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ========================================
+             검은 화면 독백
+        ========================================= -->
+
+        <section
+            class="black-scene"
+            id="blackScene"
+        >
+
+            <div
+                class="black-dialogue-box"
+                id="blackDialogue"
+            >
+
+                <div
+                    class="black-dialogue-name"
+                    id="blackDialogueName"
+                ></div>
+
+                <div
+                    class="black-dialogue-text"
+                    id="blackDialogueText"
+                ></div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
