@@ -202,6 +202,7 @@ body {
 
     left: 52%;
     top: 80%;
+
     width: 18%;
     height: 14%;
 
@@ -257,6 +258,8 @@ body {
     z-index: 50;
 
     cursor: pointer;
+
+    overflow: hidden;
 }
 
 
@@ -359,7 +362,6 @@ body {
 .password-popup input {
 
     width: 100%;
-
     height: 44px;
 
     padding: 0 12px;
@@ -381,7 +383,6 @@ body {
 
 
 .password-popup input:focus {
-
     border-color: #fff;
 }
 
@@ -389,7 +390,6 @@ body {
 .password-popup button {
 
     width: 100%;
-
     height: 44px;
 
     border: none;
@@ -460,7 +460,7 @@ body {
 }
 
 
-.black-dialogue {
+.black-dialogue-box {
 
     position: absolute;
 
@@ -504,43 +504,127 @@ body {
 
 @media (max-width: 600px) {
 
+    /*
+       모바일 브라우저의 주소창 / 하단 메뉴가
+       화면을 침범하지 않도록 설정
+    */
+
     html,
     body {
+
         width: 100%;
         height: 100%;
+
         margin: 0;
         padding: 0;
+
         overflow: hidden;
+
         background: #000;
     }
 
+
+    /*
+       svh:
+       브라우저 UI가 펼쳐져 있는 상태에서도
+       실제 안전하게 사용할 수 있는 viewport 높이
+    */
+
     .mobile-screen {
+
         width: 100vw;
+
         height: 100vh;
-        height: 100dvh;
+        height: 100svh;
 
         margin: 0;
-        box-shadow: none;
 
         overflow: hidden;
+
+        box-shadow: none;
     }
 
+
+    /*
+       대화창이 확보해야 하는 최소 공간
+
+       일반적인 휴대폰에서는 약 259px까지 사용하고,
+       세로가 짧은 기기에서는 자동으로 줄어듦.
+    */
+
     .painting-area {
+
         width: 100vw;
-        height: calc(100vw * 1.5);
+
+        height: min(
+            calc(100vw * 1.5),
+            calc(100svh - 180px)
+        );
 
         flex-shrink: 0;
     }
 
+
+    /*
+       그림 영역 아래 남은 공간을 대화창으로 사용
+
+       그림이 짧아진 경우에도
+       대화창이 화면 아래로 밀려나지 않음.
+    */
+
     .dialogue-box {
+
         width: 100%;
-        height: calc(100vh - (100vw * 1.5));
-        height: calc(100dvh - (100vw * 1.5));
+
+        height: max(
+            180px,
+            calc(100svh - min(
+                calc(100vw * 1.5),
+                calc(100svh - 180px)
+            ))
+        );
 
         min-height: 0;
-        box-sizing: border-box;
+
+        padding:
+            24px 22px;
 
         overflow: hidden;
+    }
+
+
+    /*
+       모바일에서 글자가 너무 커져
+       대화창 밖으로 나가는 것을 방지
+    */
+
+    .dialogue-name {
+
+        font-size: 17px;
+
+        margin-bottom: 14px;
+    }
+
+
+    .dialogue-text {
+
+        font-size: 15px;
+
+        line-height: 1.8;
+    }
+
+
+    /*
+       검은 화면의 마지막 대화도
+       모바일 화면 안에서 안정적으로 표시
+    */
+
+    .black-dialogue-box {
+
+        min-height: 180px;
+
+        padding:
+            24px 22px 30px;
     }
 
 }
