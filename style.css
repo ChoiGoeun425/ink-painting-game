@@ -460,7 +460,7 @@ body {
 }
 
 
-.black-dialogue-box {
+.black-dialogue {
 
     position: absolute;
 
@@ -508,31 +508,32 @@ body {
         background: #000;
     }
 
-
     .mobile-screen {
-
         width: 100vw;
         height: 100dvh;
-
         box-shadow: none;
-    }
 
+        display: flex;
+        flex-direction: column;
+    }
 
     .painting-area {
-
         width: 100vw;
+        height: auto;
 
-        height:
-            calc(100vw * 1.5);
+        aspect-ratio: 2 / 3;
+
+        flex-shrink: 0;
     }
 
-
     .dialogue-box {
+        width: 100%;
+        height: auto;
 
-        height:
-            calc(100dvh - (100vw * 1.5));
+        flex: 1;
+        min-height: 0;
 
-        min-height: 200px;
+        box-sizing: border-box;
     }
 
 }
