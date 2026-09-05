@@ -1261,7 +1261,7 @@ function showPersimmonChoice() {
             type="button"
             class="choice-button"
             id="ignoreChoice">
-            아니다
+            하지 않는다
         </button>
     `;
 
@@ -1301,13 +1301,16 @@ function showPersimmonChoice() {
     */
 
     document
-        .querySelector("#ignoreChoice")
-        .addEventListener("click", function (event) {
+    .querySelector("#ignoreChoice")
+    .addEventListener("click", function (event) {
 
-            event.stopPropagation();
+        event.stopPropagation();
 
-            choiceBox.remove();
+        choiceBox.remove();
 
-            showPersimmonChoice();
+        gameMode = "explore";
+
+        dialogueName.textContent = "";
+        dialogueText.textContent = "";
         });
 }
