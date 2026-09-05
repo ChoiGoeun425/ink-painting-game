@@ -171,11 +171,6 @@ const persimmonDialogues = [
         text: "무언가 말을 거는 소리가 들려온다."
     },
 
-    {
-        name: "김솔음",
-        text: "귀를 기울여보자."
-    }
-
 ];
 
 let persimmonStep = 0;
@@ -427,7 +422,6 @@ dialogueBox.addEventListener(
 
         if (gameMode === "persimmon") {
 
-
             /*
                 곶감 설명 이후
                 곶감 대사 배열을 하나씩 출력
@@ -445,15 +439,12 @@ dialogueBox.addEventListener(
 
                 persimmonStep++;
 
-
                 /*
                     이전 글자를 먼저 지움
                 */
 
                 dialogueName.textContent = "";
-
                 dialogueText.textContent = "";
-
 
                 /*
                     다음 대사 출력
@@ -464,37 +455,43 @@ dialogueBox.addEventListener(
                     dialogue.text
                 );
 
-
                 return;
-
             }
 
-
             /*
-                모든 곶감 대사가 끝났으면
-                다시 터치했을 때 글자를 지우고
-                팝업을 띄움
+                모든 곶감 대사가 끝나면
+                선택지를 띄움
             */
 
-            dialogueName.textContent = "";
-
-            dialogueText.textContent = "";
-
-
-            setTimeout(
-                function () {
-
-                    openPasswordPopup();
-
-                },
-                300
-            );
-
+            showPersimmonChoice();
 
             return;
-
         }
 
+        if (gameMode === "persimmonListen") {
+
+            if (isTyping) {
+                clearTimeout(typingTimer);
+
+                currentTypingElement.textContent =
+                    currentTypingText;
+
+                isTyping = false;
+                currentTypingText = "";
+                currentTypingElement = null;
+
+                return;
+            }
+
+            dialogueName.textContent = "";
+            dialogueText.textContent = "";
+
+            setTimeout(function () {
+                openPasswordPopup();
+            }, 300);
+
+            return;
+        }
 
         /* ==================================================
            3. 일반 스토리
@@ -594,7 +591,7 @@ dialogueBox.addEventListener(
 
             else {
 
-               finishEnding();
+                finishEnding();
 
             }
 
@@ -1238,4 +1235,79 @@ async function finishEnding() {
 
     // 암전
     endingScene.classList.add("show");
+}
+
+function showPersimmonChoice() {
+
+    gameMode = "persimmonChoice";
+
+    dialogueName.textContent = "";
+    dialogueText.textContent = "";
+
+    const choiceBox =
+        document.createElement("div");
+
+    choiceBox.className = "choice-box";
+
+    choiceBox.innerHTML = `
+        <button
+            type="button"
+            class="choice-button"
+            id="listenChoice">
+            귀를 기울인다
+        </button>
+
+        <button
+            type="button"
+            class="choice-button"
+            id="ignoreChoice">
+            아니다
+        </button>
+    `;
+
+    /*
+        대화창 안이 아니라
+        mobile-screen에 직접 추가
+    */
+
+    document
+        .querySelector(".mobile-screen")
+        .appendChild(choiceBox);
+
+
+    /*
+        귀를 기울인다
+    */
+
+    document
+        .querySelector("#listenChoice")
+        .addEventListener("click", function (event) {
+
+            event.stopPropagation();
+
+            choiceBox.remove();
+
+            gameMode = "persimmonListen";
+
+            showDialogue(
+                "김솔음",
+                "……귀를 기울여보자."
+            );
+        });
+
+
+    /*
+        아니다
+    */
+
+    document
+        .querySelector("#ignoreChoice")
+        .addEventListener("click", function (event) {
+
+            event.stopPropagation();
+
+            choiceBox.remove();
+
+            showPersimmonChoice();
+        });
 }
