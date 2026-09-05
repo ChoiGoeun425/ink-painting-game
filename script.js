@@ -23,6 +23,9 @@ const dialogueText =
 const objects =
     document.querySelectorAll(".object");
 
+const endingScene = document.querySelector("#endingScene");
+const endingText = document.querySelector("#endingText");
+
 
 /* ==========================================================
    팝업 요소
@@ -100,6 +103,47 @@ const storyDialogues = [
 
 let storyIndex = 0;
 
+const memoryAfterDialogues = [
+
+    {
+        name: "김솔음",
+        text: "…...!"
+    },
+
+    {
+        text: "무언가 할퀴는 소리, 비명."
+    },
+
+    {
+        text: "그러나, 남은 것은 수묵화 속 풍경뿐이었다."
+    },
+
+    {
+        name: "김솔음",
+        text: "……단순한 그림이 아니야."
+    },
+
+    {
+        text: "호랑이와 곶감."
+    },
+
+    {
+        text: "장인석은, 숨결을 불어넣기 위해 무언가와 계약을 했다고 하였다."
+    },
+
+    {
+        name: "김솔음",
+        text: "하지만 그 기억은 장인석의 것으로 보이지 않았어."
+    },
+
+    {
+        name: "김솔음",
+        text: "......다음 그림을 보면 무언가 더 알 수 있을지도 몰라."
+    },
+];
+
+let memoryAfterIndex = 0;
+
 
 /* ==========================================================
    곶감 대사
@@ -152,7 +196,7 @@ const wrongAnswerDialogues = [
         text: "자신의 그림에 대한 평가는 전부 모아뒀다라고."
     },
 
-    
+
     {
         name: "김솔음",
         text: "그걸 떠올려본다면, 이 문제의 답도 알아낼 수 있을 거야."
@@ -183,23 +227,15 @@ let currentTypingElement = null;
 const blackDialogues = [
 
     {
-        name: "김솔음",
-        text: "호랑이와 곶감."
+        text: "아이는 곶감을 좋아하였다."
     },
 
     {
-        name: "김솔음",
-        text: "장인석이 그려낸 그림은 제각각 모티브가 있다고 했어."
+        text: "작은 손으로 곶감을 쥐고는"
     },
 
     {
-        name: "김솔음",
-        text: "그렇다면 이 곶감과 호랑이에도 의미가 있겠지."
-    },
-
-    {
-        name: "김솔음",
-        text: "그리고 마지막의 그 독백은... 무슨 의미지?"
+        text: "함박웃음을 지었지."
     }
 
 ];
@@ -529,6 +565,36 @@ dialogueBox.addEventListener(
                 dialogueText.textContent = "";
 
                 gameMode = "explore";
+
+            }
+
+            return;
+
+        }
+
+        /* ==================================================
+   기억 이후 솔음 대화
+================================================== */
+
+        if (gameMode === "memoryAfter") {
+
+            if (
+                memoryAfterIndex <
+                memoryAfterDialogues.length - 1
+            ) {
+
+                memoryAfterIndex++;
+
+                showDialogue(
+                    memoryAfterDialogues[memoryAfterIndex].name,
+                    memoryAfterDialogues[memoryAfterIndex].text
+                );
+
+            }
+
+            else {
+
+               finishEnding();
 
             }
 
@@ -870,9 +936,306 @@ blackDialogueBox.addEventListener(
                 나중에 추가 가능
             */
 
+            playMemoryScene();
+
             return;
 
         }
 
     }
 );
+
+const memoryScene =
+    document.getElementById("memory-scene");
+
+const memoryText =
+    document.getElementById("memory-text");
+
+const painting =
+    document.querySelector(".painting");
+
+const memoryLines = [
+    "낮아진 시야로 보인 것은",
+    "거멓게 칠해진 무언가.",
+    "안정감을 주는 그것은",
+    "손을 들어올려 머리를 쓰다듬었다.",
+    "따뜻하게."
+];
+
+const glitchDialogues = [
+
+    {
+        name: "김솔음",
+        text: "■■■■■■■■."
+    },
+
+    {
+        name: "???",
+        text: "■■■……■■."
+    }
+
+];
+
+async function playMemoryScene() {
+
+    /* 검은 화면 독백 종료 */
+    blackScene.classList.remove("show");
+
+    /* 기억 장면 시작 */
+    memoryScene.classList.remove("hidden");
+
+    /* 낮아진 시야 */
+    await wait(300);
+
+    painting.classList.add("memory-low-view");
+
+    await wait(1000);
+
+
+    /* ==========================================
+       기억 장면
+    ========================================== */
+
+    for (const line of memoryLines) {
+
+        memoryText.style.opacity = 0;
+
+        await wait(350);
+
+        memoryText.textContent = line;
+
+        memoryText.style.opacity = 1;
+
+        await wait(2200);
+
+    }
+
+
+    memoryText.style.opacity = 0;
+
+    await wait(700);
+
+
+    /* ==========================================
+       기억 속 대화
+    ========================================== */
+
+    dialogueBox.classList.add("show");
+
+    for (const dialogue of glitchDialogues) {
+
+        showDialogue(
+            dialogue.name,
+            dialogue.text
+        );
+
+        await wait(1800);
+    }
+
+    await wait(300);
+
+
+    /* 글리치 */
+    await playGlitch();
+
+
+    /* ==========================================
+       정신을 차림
+    ========================================== */
+
+    memoryScene.classList.add("hidden");
+
+    painting.classList.remove("memory-low-view");
+
+
+    /* 솔음 대화 시작 */
+    gameMode = "memoryAfter";
+
+    memoryAfterIndex = 0;
+
+    dialogueBox.classList.add("show");
+
+    showDialogue(
+        memoryAfterDialogues[memoryAfterIndex].name,
+        memoryAfterDialogues[memoryAfterIndex].text
+    );
+
+}
+
+async function playGlitch() {
+
+    /* ==========================================================
+       1차 : 짧은 RGB 깨짐
+    ========================================================== */
+
+    memoryScene.classList.add("glitch");
+
+    await wait(90);
+
+    memoryScene.classList.remove("glitch");
+
+    await wait(50);
+
+
+    /* ==========================================================
+       2차 : 화면 조각 생성
+    ========================================================== */
+
+    createGlitchSlices();
+
+    memoryScene.classList.add("glitch-heavy");
+
+    await wait(180);
+
+    memoryScene.classList.remove("glitch-heavy");
+
+    await wait(60);
+
+
+    /* ==========================================================
+       3차 : 조각을 한 번 더 크게 깨뜨림
+    ========================================================== */
+
+    createGlitchSlices();
+
+    memoryScene.classList.add("glitch-heavy");
+
+    await wait(220);
+
+    memoryScene.classList.remove("glitch-heavy");
+
+    await wait(80);
+
+
+    /* ==========================================================
+       마지막 : 화면 전체가 한 번 크게 무너짐
+    ========================================================== */
+
+    createGlitchSlices();
+
+    memoryScene.classList.add("glitch-final");
+
+    await wait(250);
+
+    memoryScene.classList.remove("glitch-final");
+
+    await wait(80);
+}
+
+/* ==========================================================
+   화면 조각 글리치
+========================================================== */
+
+function createGlitchSlices() {
+
+    const sliceCount = 12;
+
+    for (let i = 0; i < sliceCount; i++) {
+
+        const slice = document.createElement("div");
+
+        slice.className = "glitch-slice";
+
+        /*
+           화면에서 랜덤한 높이에 조각을 배치
+        */
+
+        const top = Math.random() * 100;
+
+        const height = 2 + Math.random() * 10;
+
+        /*
+           조각이 움직일 거리
+        */
+
+        const moveX =
+            (Math.random() - 0.5) * 100;
+
+        const moveY =
+            (Math.random() - 0.5) * 8;
+
+        /*
+           RGB 색수차
+        */
+
+        const rgbType = Math.random();
+
+        if (rgbType < 0.33) {
+
+            slice.classList.add("glitch-red");
+
+        } else if (rgbType < 0.66) {
+
+            slice.classList.add("glitch-blue");
+
+        } else {
+
+            slice.classList.add("glitch-normal");
+
+        }
+
+        slice.style.top = `${top}%`;
+        slice.style.height = `${height}%`;
+
+        slice.style.setProperty(
+            "--glitch-x",
+            `${moveX}px`
+        );
+
+        slice.style.setProperty(
+            "--glitch-y",
+            `${moveY}px`
+        );
+
+        /*
+           랜덤한 애니메이션 속도
+        */
+
+        slice.style.animationDuration =
+            `${70 + Math.random() * 160}ms`;
+
+        /*
+           랜덤한 시작 지연
+        */
+
+        slice.style.animationDelay =
+            `${Math.random() * 60}ms`;
+
+        memoryScene.appendChild(slice);
+
+        /*
+           잠깐 후 자동 삭제
+        */
+
+        setTimeout(function () {
+
+            slice.remove();
+
+        }, 350);
+    }
+}
+
+function wait(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+/* ==========================================================
+   엔딩
+========================================================== */
+
+async function finishEnding() {
+
+    gameMode = "ending";
+
+    // 마지막 대사를 잠시 보여준다
+    await wait(1000);
+
+    // 대화창 사라짐
+    dialogueBox.classList.remove("show");
+
+    // 수묵화만 잠시 보여줌
+    await wait(1200);
+
+    // 암전
+    endingScene.classList.add("show");
+}
