@@ -1152,3 +1152,58 @@ body {
     user-select: none;
     -webkit-user-select: none;
 }
+
+/* ==========================================================
+   전체 모바일 터치 하이라이트 제거
+========================================================== */
+
+/*
+   모바일에서 클릭할 때 나타나는
+   파란색 터치 영역 제거
+*/
+
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+/*
+   텍스트 선택 방지
+
+   게임 화면을 터치했을 때
+   글자가 선택되는 현상도 방지
+*/
+
+.mobile-screen,
+.mobile-screen * {
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+
+/*
+   게임 화면의 터치 동작 최적화
+*/
+
+.mobile-screen {
+    touch-action: manipulation;
+}
+
+
+/*
+   클릭 가능한 요소들도 동일하게 적용
+*/
+
+button,
+.object,
+.dialogue-box,
+.choice-box,
+.choice-button,
+.black-scene,
+.memory-scene {
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}

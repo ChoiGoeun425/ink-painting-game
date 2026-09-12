@@ -107,7 +107,7 @@ const memoryAfterDialogues = [
 
     {
         name: "김솔음",
-        text: "…...!"
+        text: "......!"
     },
 
     {
