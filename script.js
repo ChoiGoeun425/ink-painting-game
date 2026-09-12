@@ -124,10 +124,6 @@ const memoryAfterDialogues = [
     },
 
     {
-        text: "호랑이와 곶감."
-    },
-
-    {
         text: "장인석은, 숨결을 불어넣기 위해 무언가와 계약을 했다고 하였다."
     },
 
@@ -137,9 +133,27 @@ const memoryAfterDialogues = [
     },
 
     {
-        name: "김솔음",
-        text: "......다음 그림을 보면 무언가 더 알 수 있을지도 몰라."
+        text: "보는 것이 아닌 직감으로 알 수 있었다."
     },
+
+    {
+        text: "성인 남성의 높이가 아닌 아이의 시선."
+    },
+
+    {
+        name: "김솔음",
+        text: "그렇다면...... 그건, 누구의."
+    },
+
+    {
+        name: "김솔음",
+        text: "이 그림만으로는 알 수 없어."
+    },
+
+    {
+        name: "김솔음",
+        text: "……다음 그림에도 같은 기억이 남아 있다면, 뭔가 더 알 수 있을지도 몰라."
+    }
 ];
 
 let memoryAfterIndex = 0;
@@ -163,7 +177,7 @@ const persimmonDialogues = [
 
     {
         name: "김솔음",
-        text: "……아무래도 탈출하려면 이쪽을 이용해야 하나 본데."
+        text: "……아무래도 이쪽에 무언가 있는 것 같은데."
     },
 
     {
@@ -884,9 +898,20 @@ function showBlackDialogue() {
    검은 화면 클릭
 ========================================================== */
 
-blackDialogueBox.addEventListener(
+/* ==========================================================
+   검은 화면 클릭
+========================================================== */
+
+blackScene.addEventListener(
     "click",
-    function () {
+    function (event) {
+
+        /*
+            모바일 터치 시
+            브라우저 기본 선택/하이라이트 방지
+        */
+
+        event.preventDefault();
 
 
         /* ==================================================
@@ -930,7 +955,7 @@ blackDialogueBox.addEventListener(
 
             /*
                 마지막 대사 이후
-                나중에 추가 가능
+                기억 장면으로 이동
             */
 
             playMemoryScene();

@@ -433,6 +433,8 @@ body {
     color: #fff;
 
     z-index: 200;
+
+    touch-action: manipulation;
 }
 
 
@@ -1116,4 +1118,16 @@ body {
         overflow: hidden;
     }
 
+}
+
+/* ==========================================================
+   모바일 터치 선택 효과 제거
+========================================================== */
+
+.black-scene,
+.black-scene * {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    user-select: none;
+    -webkit-user-select: none;
 }
