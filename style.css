@@ -1131,3 +1131,24 @@ body {
     user-select: none;
     -webkit-user-select: none;
 }
+
+.black-scene {
+    touch-action: manipulation;
+
+    -webkit-tap-highlight-color: transparent;
+
+    user-select: none;
+    -webkit-user-select: none;
+
+    -webkit-touch-callout: none;
+}
+
+.black-dialogue-name,
+.black-dialogue-text {
+    pointer-events: none;
+
+    -webkit-tap-highlight-color: transparent;
+
+    user-select: none;
+    -webkit-user-select: none;
+}
